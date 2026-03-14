@@ -383,7 +383,7 @@ DESPENSA
       <div class="item-left">
         <div class="item-name-row">
           <span class="item-name">Carpaccio di Manzo</span>
-          <button class="video-btn" onclick="openVideo('https://www.youtube.com/watch?v=KjbAeB-Fp5E&t=35s','Carpaccio di Manzo')">
+          <button class="video-btn" onclick="openVideo('SClk9Ni-xPQ','Carpaccio di Manzo')">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ver
           </button>
         </div>
