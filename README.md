@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
@@ -335,14 +336,14 @@
   }
 
   .video-wrap {
-    position: relative;
-    padding-bottom: 56.25%;
     background: #000;
+    line-height: 0;
   }
-  .video-wrap iframe {
-    position:absolute; inset:0;
-    width:100%; height:100%;
-    border:none;
+  .video-wrap video {
+    width: 100%;
+    max-height: 70vh;
+    display: block;
+    outline: none;
   }
 </style>
 </head>
@@ -381,7 +382,7 @@
       <div class="item-left">
         <div class="item-name-row">
           <span class="item-name">Carpaccio di Manzo</span>
-          <button class="video-btn" onclick="openVideo('9LXGuIsH6xc','Carpaccio di Manzo')">
+          <button class="video-btn" onclick="openVideo('carpaccio-manzo.mp4','Carpaccio di Manzo')">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ver
           </button>
         </div>
@@ -394,7 +395,7 @@
       <div class="item-left">
         <div class="item-name-row">
           <span class="item-name">Burrata con Prosciutto Crudo di Parma 24 mesi</span>
-          <button class="video-btn" onclick="openVideo('dQw4w9WgXcQ','Burrata con Prosciutto')">
+          <button class="video-btn" onclick="openVideo('burrata-prosciutto.mp4','Burrata con Prosciutto')">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ver
           </button>
         </div>
@@ -507,7 +508,7 @@
       <div class="item-left">
         <div class="item-name-row">
           <span class="item-name">Spaghetti ai Gamberi e Peperoncino</span>
-          <button class="video-btn" onclick="openVideo('dQw4w9WgXcQ','Spaghetti ai Gamberi e Peperoncino')">
+          <button class="video-btn" onclick="openVideo('spaghetti-gamberi.mp4','Spaghetti ai Gamberi e Peperoncino')">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ver
           </button>
         </div>
@@ -553,7 +554,7 @@
       <div class="item-left">
         <div class="item-name-row">
           <span class="item-name">Linguini Nero ai Frutti di Mare</span>
-          <button class="video-btn" onclick="openVideo('dQw4w9WgXcQ','Linguini Nero ai Frutti di Mare')">
+          <button class="video-btn" onclick="openVideo('linguini-nero.mp4','Linguini Nero ai Frutti di Mare')">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ver
           </button>
         </div>
@@ -597,7 +598,7 @@
       <div class="item-left">
         <div class="item-name-row">
           <span class="item-name">Risotto ai Gamberi e Asparagi</span>
-          <button class="video-btn" onclick="openVideo('dQw4w9WgXcQ','Risotto ai Gamberi e Asparagi')">
+          <button class="video-btn" onclick="openVideo('risotto-gamberi.mp4','Risotto ai Gamberi e Asparagi')">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ver
           </button>
         </div>
@@ -617,7 +618,7 @@
       <div class="item-left">
         <div class="item-name-row">
           <span class="item-name">Risotto Funghi e Tartufo Nero</span>
-          <button class="video-btn" onclick="openVideo('dQw4w9WgXcQ','Risotto Funghi e Tartufo Nero')">
+          <button class="video-btn" onclick="openVideo('risotto-tartufo.mp4','Risotto Funghi e Tartufo Nero')">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ver
           </button>
         </div>
@@ -638,7 +639,7 @@
       <div class="item-left">
         <div class="item-name-row">
           <span class="item-name">Burrata</span>
-          <button class="video-btn" onclick="openVideo('dQw4w9WgXcQ','Pizza Burrata')">
+          <button class="video-btn" onclick="openVideo('pizza-burrata.mp4','Pizza Burrata')">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ver
           </button>
         </div>
@@ -661,7 +662,7 @@
       <div class="item-left">
         <div class="item-name-row">
           <span class="item-name">Tartufi e Porcini</span>
-          <button class="video-btn" onclick="openVideo('dQw4w9WgXcQ','Pizza Tartufi e Porcini')">
+          <button class="video-btn" onclick="openVideo('pizza-tartufi.mp4','Pizza Tartufi e Porcini')">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> ver
           </button>
         </div>
@@ -776,24 +777,37 @@
       </button>
     </div>
     <div class="video-wrap">
-      <iframe id="videoFrame" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+      <video id="videoPlayer" controls playsinline>
+        <source id="videoSource" src="" type="video/mp4">
+        O teu browser não suporta vídeo HTML5.
+      </video>
     </div>
   </div>
 </div>
 
 <script>
-  function openVideo(id, title) {
+  function openVideo(file, title) {
     const modal = document.getElementById('modal');
+    const player = document.getElementById('videoPlayer');
+    const source = document.getElementById('videoSource');
     document.getElementById('modalTitle').textContent = title;
-    document.getElementById('videoFrame').src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+    source.src = 'videos/' + file;
+    player.load();
+    player.play();
     modal.classList.add('active');
     requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('visible')));
     document.addEventListener('keydown', onKey);
   }
   function closeVideo() {
     const modal = document.getElementById('modal');
+    const player = document.getElementById('videoPlayer');
     modal.classList.remove('visible');
-    setTimeout(() => { modal.classList.remove('active'); document.getElementById('videoFrame').src = ''; }, 300);
+    setTimeout(() => {
+      modal.classList.remove('active');
+      player.pause();
+      player.currentTime = 0;
+      document.getElementById('videoSource').src = '';
+    }, 300);
     document.removeEventListener('keydown', onKey);
   }
   function handleClick(e) { if (e.target === document.getElementById('modal')) closeVideo(); }
@@ -802,4 +816,3 @@
 
 </body>
 </html>
-
